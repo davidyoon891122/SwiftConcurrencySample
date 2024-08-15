@@ -5,7 +5,7 @@
 //  Created by Davidyoon on 8/13/24.
 //
 
-import Foundation
+import UIKit
 
 struct UserModel {
     
@@ -13,6 +13,19 @@ struct UserModel {
     let name: String
     let age: Int
     let gender: GenderType
+    
+}
+
+extension UserModel {
+    
+    var genderImage: UIImage? {
+        switch self.gender {
+        case .man:
+            UIImage(systemName: "arrowshape.up.fill")
+        case .woman:
+            UIImage(systemName: "arrowshape.down.fill")!
+        }
+    }
     
 }
 

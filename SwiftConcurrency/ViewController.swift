@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CombineCocoa
 import SnapKit
 
 class ViewController: UIViewController {
@@ -34,8 +35,43 @@ class ViewController: UIViewController {
     
     private lazy var genderImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "arrowshape.up.fill")
+        imageView.contentMode = .scaleAspectFit
         
         return imageView
+    }()
+    
+    private lazy var userProfileView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        view.layer.borderColor = UIColor.gray.withAlphaComponent(0.7).cgColor
+        view.layer.borderWidth = 1.0
+        view.layer.cornerRadius = 4.0
+        
+        [
+            self.userNameLabel,
+            self.userAgeLabel,
+            self.genderImageView
+        ].forEach { view.addSubview($0) }
+        
+        self.userNameLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(16.0)
+            $0.leading.equalToSuperview().offset(16.0)
+        }
+        
+        self.genderImageView.snp.makeConstraints {
+            $0.width.height.equalTo(20.0)
+            $0.leading.equalTo(self.userNameLabel.snp.trailing).offset(16.0)
+            $0.centerY.equalTo(self.userNameLabel)
+        }
+        
+        self.userAgeLabel.snp.makeConstraints {
+            $0.top.equalTo(self.userNameLabel.snp.bottom).offset(8.0)
+            $0.leading.trailing.equalTo(self.userNameLabel)
+            $0.bottom.equalToSuperview().offset(-16.0)
+        }
+        
+        return view
     }()
     
     private lazy var fetchButton: UIButton = {
@@ -63,6 +99,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupViews()
+        self.bindViewModel()
         self.viewDidLoadPublisher.send()
     }
     
@@ -71,7 +108,6 @@ class ViewController: UIViewController {
         self.viewWillAppearPublisher.send()
     }
 
-
 }
 
 private extension ViewController {
@@ -79,9 +115,15 @@ private extension ViewController {
     func setupViews() {
         self.view.backgroundColor = .systemBackground
         [
+            self.userProfileView,
             self.fetchButton
         ].forEach {
             self.view.addSubview($0)
+        }
+        
+        self.userProfileView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview().inset(16.0)
         }
         
         self.fetchButton.snp.makeConstraints {
@@ -94,17 +136,25 @@ private extension ViewController {
     func bindViewModel() {
         let outputs = self.viewModel.bind(.init(
             viewDidLoad: self.viewDidLoadPublisher.eraseToAnyPublisher(),
-            viewWillAppear: self.viewWillAppearPublisher.eraseToAnyPublisher()
+            viewWillAppear: self.viewWillAppearPublisher.eraseToAnyPublisher(),
+            didTapFetchButton: self.fetchButton.tapPublisher
         ))
         
         [
             outputs.event
                 .sink(receiveValue: { _ in }),
             outputs.user
-                .sink(receiveValue: { user in
-                    
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: { [weak self] user in
+                    self?.setUserData(user: user)
                 })
         ].forEach { self.cancellables.insert($0) }
+    }
+ 
+    func setUserData(user: UserModel) {
+        self.userNameLabel.text = user.name
+        self.userAgeLabel.text = "\(user.age) years"
+        self.genderImageView.image = user.genderImage
     }
     
 }

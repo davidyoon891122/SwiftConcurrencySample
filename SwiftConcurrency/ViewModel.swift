@@ -13,6 +13,7 @@ struct ViewModel {
     struct Inputs {
         let viewDidLoad: AnyPublisher<Void, Never>
         let viewWillAppear: AnyPublisher<Void, Never>
+        let didTapFetchButton: AnyPublisher<Void, Never>
     }
     
     struct Outputs {
@@ -43,6 +44,18 @@ extension ViewModel {
             inputs.viewWillAppear
                 .map {
                     print("ViewWillAppear")
+                    Task {
+                        do {
+                            let userModel = try await self.repository.fetchUser()
+                            userPublisher.send(userModel)
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
+                .eraseToAnyPublisher(),
+            inputs.didTapFetchButton
+                .map {
                     Task {
                         do {
                             let userModel = try await self.repository.fetchUser()
