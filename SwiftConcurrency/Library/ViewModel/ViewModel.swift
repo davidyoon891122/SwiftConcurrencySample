@@ -52,10 +52,13 @@ extension ViewModel {
                     print("ViewWillAppear")
                     Task {
                         do {
-                            let userModel = try await self.userRepository.fetchUser()
-                            let productModels = try await self.productRepository.fetchProduct()
-                            userPublisher.send(userModel)
-                            productSubject.send(productModels)
+                            async let userModel = try await self.userRepository.fetchUser()
+                            async let productModels = try await self.productRepository.fetchProduct()
+                            
+                            var newUserModel = try await userModel
+                            var newProductModels = try await productModels
+                            userPublisher.send(newUserModel)
+                            productSubject.send(newProductModels)
                         } catch {
                             print(error.localizedDescription)
                         }
