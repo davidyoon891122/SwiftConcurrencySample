@@ -17,6 +17,10 @@
 		AD5C3D832C6AD48C00090D44 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5C3D822C6AD48C00090D44 /* ViewModel.swift */; };
 		AD5C3D862C6AD97600090D44 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = AD5C3D852C6AD97600090D44 /* SnapKit */; };
 		ADCD4AF12C6EC74A00C8D447 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = ADCD4AF02C6EC74A00C8D447 /* CombineCocoa */; };
+		ADCD4AF82C72C4F600C8D447 /* ProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4AF72C72C4F600C8D447 /* ProductRepository.swift */; };
+		ADCD4AFB2C72C51900C8D447 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4AFA2C72C51900C8D447 /* ProductModel.swift */; };
+		ADCD4AFF2C72CF7700C8D447 /* ProductItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4AFE2C72CF7700C8D447 /* ProductItemCell.swift */; };
+		ADCD4B022C72D37100C8D447 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = ADCD4B012C72D37000C8D447 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +34,9 @@
 		AD5C3D7E2C6AD1CC00090D44 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		AD5C3D802C6AD1EC00090D44 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		AD5C3D822C6AD48C00090D44 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		ADCD4AF72C72C4F600C8D447 /* ProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepository.swift; sourceTree = "<group>"; };
+		ADCD4AFA2C72C51900C8D447 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		ADCD4AFE2C72CF7700C8D447 /* ProductItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductItemCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADCD4B022C72D37100C8D447 /* Kingfisher in Frameworks */,
 				ADCD4AF12C6EC74A00C8D447 /* CombineCocoa in Frameworks */,
 				AD5C3D862C6AD97600090D44 /* SnapKit in Frameworks */,
 			);
@@ -64,17 +72,60 @@
 		AD5C3D692C6AD14200090D44 /* SwiftConcurrency */ = {
 			isa = PBXGroup;
 			children = (
-				AD5C3D6A2C6AD14200090D44 /* AppDelegate.swift */,
-				AD5C3D6C2C6AD14200090D44 /* SceneDelegate.swift */,
+				ADCD4AF52C72BE2000C8D447 /* Delegate */,
 				AD5C3D6E2C6AD14200090D44 /* ViewController.swift */,
+				ADCD4AFE2C72CF7700C8D447 /* ProductItemCell.swift */,
 				AD5C3D732C6AD14400090D44 /* Assets.xcassets */,
 				AD5C3D752C6AD14400090D44 /* LaunchScreen.storyboard */,
 				AD5C3D782C6AD14400090D44 /* Info.plist */,
-				AD5C3D7E2C6AD1CC00090D44 /* UserRepository.swift */,
-				AD5C3D802C6AD1EC00090D44 /* UserModel.swift */,
-				AD5C3D822C6AD48C00090D44 /* ViewModel.swift */,
+				ADCD4AF62C72C4E300C8D447 /* Repository */,
+				ADCD4AF92C72C51200C8D447 /* Model */,
+				ADCD4AFC2C72CBA300C8D447 /* Library */,
 			);
 			path = SwiftConcurrency;
+			sourceTree = "<group>";
+		};
+		ADCD4AF52C72BE2000C8D447 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				AD5C3D6A2C6AD14200090D44 /* AppDelegate.swift */,
+				AD5C3D6C2C6AD14200090D44 /* SceneDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		ADCD4AF62C72C4E300C8D447 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				AD5C3D7E2C6AD1CC00090D44 /* UserRepository.swift */,
+				ADCD4AF72C72C4F600C8D447 /* ProductRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		ADCD4AF92C72C51200C8D447 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AD5C3D802C6AD1EC00090D44 /* UserModel.swift */,
+				ADCD4AFA2C72C51900C8D447 /* ProductModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ADCD4AFC2C72CBA300C8D447 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				ADCD4AFD2C72CBAB00C8D447 /* ViewModel */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		ADCD4AFD2C72CBAB00C8D447 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AD5C3D822C6AD48C00090D44 /* ViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,6 +147,7 @@
 			packageProductDependencies = (
 				AD5C3D852C6AD97600090D44 /* SnapKit */,
 				ADCD4AF02C6EC74A00C8D447 /* CombineCocoa */,
+				ADCD4B012C72D37000C8D447 /* Kingfisher */,
 			);
 			productName = SwiftConcurrency;
 			productReference = AD5C3D672C6AD14200090D44 /* SwiftConcurrency.app */;
@@ -128,6 +180,7 @@
 			packageReferences = (
 				AD5C3D842C6AD97600090D44 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				ADCD4AEF2C6EC74A00C8D447 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				ADCD4B002C72D37000C8D447 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = AD5C3D682C6AD14200090D44 /* Products */;
 			projectDirPath = "";
@@ -159,8 +212,11 @@
 				AD5C3D6B2C6AD14200090D44 /* AppDelegate.swift in Sources */,
 				AD5C3D7F2C6AD1CC00090D44 /* UserRepository.swift in Sources */,
 				AD5C3D812C6AD1EC00090D44 /* UserModel.swift in Sources */,
+				ADCD4AF82C72C4F600C8D447 /* ProductRepository.swift in Sources */,
 				AD5C3D832C6AD48C00090D44 /* ViewModel.swift in Sources */,
+				ADCD4AFF2C72CF7700C8D447 /* ProductItemCell.swift in Sources */,
 				AD5C3D6D2C6AD14200090D44 /* SceneDelegate.swift in Sources */,
+				ADCD4AFB2C72C51900C8D447 /* ProductModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +449,14 @@
 				minimumVersion = 0.4.1;
 			};
 		};
+		ADCD4B002C72D37000C8D447 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -405,6 +469,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ADCD4AEF2C6EC74A00C8D447 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
 			productName = CombineCocoa;
+		};
+		ADCD4B012C72D37000C8D447 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ADCD4B002C72D37000C8D447 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -86,6 +86,16 @@ class ViewController: UIViewController {
         return button
     }()
     
+    private lazy var productCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        return collectionView
+    }()
+    
+    
+    
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -94,12 +104,12 @@ class ViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupViews()
         self.bindViewModel()
+        
         self.viewDidLoadPublisher.send()
     }
     
@@ -160,5 +170,7 @@ private extension ViewController {
 }
 
 #Preview {
-    ViewController(viewModel: ViewModel(repository: UserRepository()))
+    ViewController(viewModel: ViewModel(userRepository: UserRepository(),
+                                        productRepository: ProductRepository())
+    )
 }

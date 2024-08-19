@@ -18,13 +18,18 @@ struct ViewModel {
     
     struct Outputs {
         let user: AnyPublisher<UserModel, Never>
+        let products: AnyPublisher<[ProductModel], Never>
         let event: AnyPublisher<Void, Never>
     }
     
-    private let repository: UserRepositoryProtocol
+    private let userRepository: UserRepositoryProtocol
+    private let productRepository: ProductRepositoryProtocol
     
-    init(repository: UserRepositoryProtocol) {
-        self.repository = repository
+    init(userRepository: UserRepositoryProtocol,
+         productRepository: ProductRepositoryProtocol
+    ) {
+        self.userRepository = userRepository
+        self.productRepository = productRepository
     }
     
 }
@@ -34,6 +39,7 @@ extension ViewModel {
     func bind(_ inputs: Inputs) -> Outputs {
         
         let userPublisher: PassthroughSubject<UserModel, Never> = .init()
+        let productSubject: PassthroughSubject<[ProductModel], Never> = .init()
         
         let events = Publishers.MergeMany(
             inputs.viewDidLoad
@@ -46,7 +52,7 @@ extension ViewModel {
                     print("ViewWillAppear")
                     Task {
                         do {
-                            let userModel = try await self.repository.fetchUser()
+                            let userModel = try await self.userRepository.fetchUser()
                             userPublisher.send(userModel)
                         } catch {
                             print(error.localizedDescription)
@@ -58,8 +64,12 @@ extension ViewModel {
                 .map {
                     Task {
                         do {
-                            let userModel = try await self.repository.fetchUser()
+                            let userModel = try await self.userRepository.fetchUser()
+                            
+                            let productModels = try await self.productRepository.fetchProduct()
+                            
                             userPublisher.send(userModel)
+                            productSubject.send(productModels)
                         } catch {
                             print(error.localizedDescription)
                         }
@@ -69,7 +79,9 @@ extension ViewModel {
         )
             .eraseToAnyPublisher()
         
-        return .init(user: userPublisher.eraseToAnyPublisher(), event: events)
+        return .init(user: userPublisher.eraseToAnyPublisher(),
+                     products: productSubject.eraseToAnyPublisher(),
+                     event: events)
     }
     
 }
