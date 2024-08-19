@@ -87,14 +87,23 @@ class ViewController: UIViewController {
     }()
     
     private lazy var productCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
+        let layout = self.createLayout()
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(ProductItemCell.self, forCellWithReuseIdentifier: ProductItemCell.identifier)
         
         return collectionView
     }()
     
-    
+    private lazy var dataSource: UICollectionViewDiffableDataSource<Int, ProductModel> = {
+        .init(collectionView: self.productCollectionView, cellProvider: { collectionView, indexPath, item in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductItemCell.identifier, for: indexPath) as? ProductItemCell else { return UICollectionViewCell() }
+            
+            cell.setData(data: item)
+            
+            return cell
+        })
+    }()
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -126,7 +135,7 @@ private extension ViewController {
         self.view.backgroundColor = .systemBackground
         [
             self.userProfileView,
-            self.fetchButton
+            self.productCollectionView
         ].forEach {
             self.view.addSubview($0)
         }
@@ -136,10 +145,11 @@ private extension ViewController {
             $0.leading.trailing.equalToSuperview().inset(16.0)
         }
         
-        self.fetchButton.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.equalTo(80.0)
-            $0.height.equalTo(40.0)
+        self.productCollectionView.snp.makeConstraints {
+            $0.top.equalTo(self.userProfileView.snp.bottom).offset(8.0)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-8.0)
         }
     }
     
@@ -157,6 +167,11 @@ private extension ViewController {
                 .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { [weak self] user in
                     self?.setUserData(user: user)
+                }),
+            outputs.products
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: { [weak self] products in
+                    self?.applyDatasource(data: products)
                 })
         ].forEach { self.cancellables.insert($0) }
     }
@@ -165,6 +180,25 @@ private extension ViewController {
         self.userNameLabel.text = user.name
         self.userAgeLabel.text = "\(user.age) years"
         self.genderImageView.image = user.genderImage
+    }
+    
+    func createLayout() -> UICollectionViewCompositionalLayout {
+        .init(sectionProvider: { section, layoutEnvironment in
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(500)))
+            let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(500)), subitems: [item])
+            
+            let section = NSCollectionLayoutSection(group: group)
+            
+            return section
+        })
+    }
+    
+    func applyDatasource(data: [ProductModel]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, ProductModel>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(data, toSection: 0)
+        
+        self.dataSource.apply(snapshot, animatingDifferences: true)
     }
     
 }

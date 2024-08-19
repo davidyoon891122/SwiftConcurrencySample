@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductModel {
+struct ProductModel: Identifiable, Hashable {
     
     let id: UUID
     let image: URL?

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 import Kingfisher
 
 final class ProductItemCell: UICollectionViewCell {
@@ -14,6 +15,9 @@ final class ProductItemCell: UICollectionViewCell {
     
     private lazy var productImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.layer.borderWidth = 1.0
+        imageView.layer.borderColor = UIColor.gray.cgColor
+        
         imageView.kf.setImage(with: URL(string: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/b3fe91f5-2696-46c6-ab05-5fdef7015a05/WMNS+AIR+MAX+97.png"))
         
         return imageView
@@ -66,6 +70,7 @@ final class ProductItemCell: UICollectionViewCell {
     
     private lazy var containerView: UIView = {
         let view = UIView()
+        
         view.backgroundColor = .systemBackground
         view.layer.borderColor = UIColor.gray.withAlphaComponent(0.7).cgColor
         view.layer.borderWidth = 1.0
@@ -116,22 +121,18 @@ final class ProductItemCell: UICollectionViewCell {
             $0.centerY.equalTo(self.priceLabel)
         }
         
-        
-        
         return view
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.setupViews()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     func setData(data: ProductModel) {
+        self.productImageView.kf.setImage(with: data.image)
+        self.titleLabel.text = data.name
+        self.brandLabel.text = data.brand
+        self.descriptionLabel.text = data.description
+        self.priceLabel.text = "\(data.price) ￦"
+        self.priceDiscountLabel.text = "\(data.discountPercent ?? 0)%"
         
+        self.setupViews()
     }
     
 }
@@ -142,7 +143,8 @@ private extension ProductItemCell {
         self.contentView.addSubview(self.containerView)
         
         self.containerView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(8.0)
+            $0.leading.trailing.equalToSuperview().inset(16.0)
         }
     }
     
@@ -150,6 +152,7 @@ private extension ProductItemCell {
 
 #Preview {
     let itemCell = ProductItemCell()
+    itemCell.setData(data: ProductModel.fakes[0])
     
     itemCell.snp.makeConstraints {
         $0.height.equalTo(150)

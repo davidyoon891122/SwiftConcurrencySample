@@ -53,7 +53,9 @@ extension ViewModel {
                     Task {
                         do {
                             let userModel = try await self.userRepository.fetchUser()
+                            let productModels = try await self.productRepository.fetchProduct()
                             userPublisher.send(userModel)
+                            productSubject.send(productModels)
                         } catch {
                             print(error.localizedDescription)
                         }
