@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  SwiftConcurrency
 //
 //  Created by Davidyoon on 8/13/24.
@@ -10,11 +10,12 @@ import Combine
 import CombineCocoa
 import SnapKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     
-    private let viewModel: ViewModel
+    private let viewModel: MainViewModel
     private let viewDidLoadPublisher: PassthroughSubject<Void, Never> = .init()
     private let viewWillAppearPublisher: PassthroughSubject<Void, Never> = .init()
+    private let rightNaviBarButtonPublisher: PassthroughSubject<Void, Never> = .init()
     private var cancellables: Set<AnyCancellable> = .init()
     
     private lazy var userNameLabel: UILabel = {
@@ -105,7 +106,7 @@ class ViewController: UIViewController {
         })
     }()
     
-    init(viewModel: ViewModel) {
+    init(viewModel: MainViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -117,6 +118,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupViews()
+        self.setupNavigationBar()
         self.bindViewModel()
         
         self.viewDidLoadPublisher.send()
@@ -129,10 +131,21 @@ class ViewController: UIViewController {
 
 }
 
-private extension ViewController {
+private extension MainViewController {
+    
+    func setupNavigationBar() {
+        self.navigationItem.title = String(describing: MainViewController.self)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .done, target: self, action: #selector(didTapRightNaviBarButton))
+    }
+    
+    @objc
+    func didTapRightNaviBarButton() {
+        self.rightNaviBarButtonPublisher.send()
+    }
     
     func setupViews() {
         self.view.backgroundColor = .systemBackground
+        self.navigationItem.title = "MainViewController"
         [
             self.userProfileView,
             self.productCollectionView
@@ -157,7 +170,8 @@ private extension ViewController {
         let outputs = self.viewModel.bind(.init(
             viewDidLoad: self.viewDidLoadPublisher.eraseToAnyPublisher(),
             viewWillAppear: self.viewWillAppearPublisher.eraseToAnyPublisher(),
-            didTapFetchButton: self.fetchButton.tapPublisher
+            didTapFetchButton: self.fetchButton.tapPublisher,
+            didTapRightNaviBarButton: self.rightNaviBarButtonPublisher.eraseToAnyPublisher()
         ))
         
         [
@@ -204,7 +218,11 @@ private extension ViewController {
 }
 
 #Preview {
-    ViewController(viewModel: ViewModel(userRepository: UserRepository(),
-                                        productRepository: ProductRepository())
-    )
+    let viewController = MainViewController(viewModel: MainViewModel(userRepository: UserRepository(),
+                                                                     productRepository: ProductRepository(),
+                                                                     navigator: MainNavigator(navigationController: UINavigationController()))
+                         )
+    
+    return UINavigationController(rootViewController: viewController)
+    
 }

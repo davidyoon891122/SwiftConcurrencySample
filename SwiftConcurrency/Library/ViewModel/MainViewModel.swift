@@ -1,5 +1,5 @@
 //
-//  ViewModel.swift
+//  MainViewModel.swift
 //  SwiftConcurrency
 //
 //  Created by Davidyoon on 8/13/24.
@@ -8,12 +8,13 @@
 import Foundation
 import Combine
 
-struct ViewModel {
+struct MainViewModel {
     
     struct Inputs {
         let viewDidLoad: AnyPublisher<Void, Never>
         let viewWillAppear: AnyPublisher<Void, Never>
         let didTapFetchButton: AnyPublisher<Void, Never>
+        let didTapRightNaviBarButton: AnyPublisher<Void, Never>
     }
     
     struct Outputs {
@@ -24,19 +25,23 @@ struct ViewModel {
     
     private let userRepository: UserRepositoryProtocol
     private let productRepository: ProductRepositoryProtocol
+    private let navigator: MainNavigatorProtocol
     
     init(userRepository: UserRepositoryProtocol,
-         productRepository: ProductRepositoryProtocol
+         productRepository: ProductRepositoryProtocol,
+         navigator: MainNavigatorProtocol
     ) {
         self.userRepository = userRepository
         self.productRepository = productRepository
+        self.navigator = navigator
     }
     
 }
 
-extension ViewModel {
+extension MainViewModel {
     
     func bind(_ inputs: Inputs) -> Outputs {
+        let navigator = self.navigator
         
         let userPublisher: PassthroughSubject<UserModel, Never> = .init()
         let productSubject: PassthroughSubject<[ProductModel], Never> = .init()
@@ -49,14 +54,13 @@ extension ViewModel {
                 .eraseToAnyPublisher(),
             inputs.viewWillAppear
                 .map {
-                    print("ViewWillAppear")
                     Task {
                         do {
                             async let userModel = try await self.userRepository.fetchUser()
                             async let productModels = try await self.productRepository.fetchProduct()
                             
-                            var newUserModel = try await userModel
-                            var newProductModels = try await productModels
+                            let newUserModel = try await userModel
+                            let newProductModels = try await productModels
                             userPublisher.send(newUserModel)
                             productSubject.send(newProductModels)
                         } catch {
@@ -79,6 +83,11 @@ extension ViewModel {
                             print(error.localizedDescription)
                         }
                     }
+                }
+                .eraseToAnyPublisher(),
+            inputs.didTapRightNaviBarButton
+                .map {
+                    navigator.toUserInfo()
                 }
                 .eraseToAnyPublisher()
         )

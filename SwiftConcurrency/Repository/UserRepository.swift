@@ -20,7 +20,7 @@ final class UserRepository {
 extension UserRepository: UserRepositoryProtocol {
     
     func fetchUser() async throws -> UserModel {
-        try await Task.sleep(nanoseconds: 5_000_000_000)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
             
         return UserModel.init(name: "David", age: 34, gender: .man)
     }
