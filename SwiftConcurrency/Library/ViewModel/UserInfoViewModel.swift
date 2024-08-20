@@ -12,9 +12,11 @@ struct UserInfoViewModel {
     
     struct Inputs {
         let viewDidLoad: AnyPublisher<Void, Never>
+        let didTapFetchButton: AnyPublisher<Void, Never>
     }
     
     struct Outputs {
+        let movieUrl: AnyPublisher<URL, Never>
         let event: AnyPublisher<Void, Never>
     }
     
@@ -30,16 +32,23 @@ extension UserInfoViewModel {
     
     func bind(_ inputs: Inputs) -> Outputs {
         
+        let movieUrlSubject: PassthroughSubject<URL, Never> = .init()
+        
         let event = Publishers.MergeMany(
             inputs.viewDidLoad
                 .map {
                     print("ViewDidLoad")
                 }
+                .eraseToAnyPublisher(),
+            inputs.didTapFetchButton
+                .map {
+                    movieUrlSubject.send(URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")!)
+                }
                 .eraseToAnyPublisher()
         )
             .eraseToAnyPublisher()
         
-        return .init(event: event)
+        return .init(movieUrl: movieUrlSubject.eraseToAnyPublisher(), event: event)
     }
     
 }

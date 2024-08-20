@@ -153,10 +153,18 @@
 			isa = PBXGroup;
 			children = (
 				ADCD4B092C74150700C8D447 /* Main */,
+				ADCD4B112C74342400C8D447 /* UserInfo */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		ADCD4B112C74342400C8D447 /* UserInfo */ = {
+			isa = PBXGroup;
+			children = (
 				ADCD4B0B2C7417FC00C8D447 /* UserInfoViewController.swift */,
 				ADCD4B0F2C7418B400C8D447 /* UserInfoNavigator.swift */,
 			);
-			path = Scene;
+			path = UserInfo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
