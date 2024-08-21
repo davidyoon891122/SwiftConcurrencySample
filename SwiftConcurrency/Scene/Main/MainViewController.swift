@@ -16,6 +16,7 @@ class MainViewController: UIViewController {
     private let viewDidLoadPublisher: PassthroughSubject<Void, Never> = .init()
     private let viewWillAppearPublisher: PassthroughSubject<Void, Never> = .init()
     private let rightNaviBarButtonPublisher: PassthroughSubject<Void, Never> = .init()
+    private let leftNaviBarButtonPublisher: PassthroughSubject<Void, Never> = .init()
     private var cancellables: Set<AnyCancellable> = .init()
     
     private lazy var userNameLabel: UILabel = {
@@ -136,11 +137,17 @@ private extension MainViewController {
     func setupNavigationBar() {
         self.navigationItem.title = String(describing: MainViewController.self)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .done, target: self, action: #selector(didTapRightNaviBarButton))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "book"), style: .plain, target: self, action: #selector(didTapLeftNaviBarButton))
     }
     
     @objc
     func didTapRightNaviBarButton() {
         self.rightNaviBarButtonPublisher.send()
+    }
+    
+    @objc
+    func didTapLeftNaviBarButton() {
+        self.leftNaviBarButtonPublisher.send()
     }
     
     func setupViews() {
@@ -171,7 +178,8 @@ private extension MainViewController {
             viewDidLoad: self.viewDidLoadPublisher.eraseToAnyPublisher(),
             viewWillAppear: self.viewWillAppearPublisher.eraseToAnyPublisher(),
             didTapFetchButton: self.fetchButton.tapPublisher,
-            didTapRightNaviBarButton: self.rightNaviBarButtonPublisher.eraseToAnyPublisher()
+            didTapRightNaviBarButton: self.rightNaviBarButtonPublisher.eraseToAnyPublisher(),
+            didTapLeftNaviBarButton: self.leftNaviBarButtonPublisher.eraseToAnyPublisher()
         ))
         
         [

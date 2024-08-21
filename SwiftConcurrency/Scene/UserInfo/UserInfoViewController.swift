@@ -49,6 +49,8 @@ final class UserInfoViewController: UIViewController {
         super.viewDidLoad()
         self.setupViews()
         self.bindViewModel()
+        
+        self.viewDidLoadSubject.send()
     }
     
 }
@@ -100,9 +102,7 @@ private extension UserInfoViewController {
         
         [
             outputs.event
-                .sink(receiveValue: {
-                    
-                }),
+                .sink(receiveValue: { _ in }),
             outputs.movieUrl
                 .sink(receiveValue: { [weak self] url in
                     self?.setupPlayer(url: url)
@@ -114,5 +114,5 @@ private extension UserInfoViewController {
 
 
 #Preview {
-    UINavigationController(rootViewController: UserInfoViewController(viewModel: UserInfoViewModel(navigator: UserInfoNavigator(navigationController: UINavigationController()))))
+    UINavigationController(rootViewController: UserInfoViewController(viewModel: UserInfoViewModel(navigator: UserInfoNavigator(navigationController: UINavigationController()), authRepository: AuthRepository())))
 }

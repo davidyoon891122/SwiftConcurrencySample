@@ -7,9 +7,19 @@
 
 import Foundation
 
+protocol AuthRepositoryProtocol {
+    
+    func getBearerToken() async throws -> String
+    
+}
+
 final actor AuthRepository {
     
     private var tokenTask: Task<String, Error>?
+    
+}
+
+extension AuthRepository: AuthRepositoryProtocol {
     
     func getBearerToken() async throws -> String {
         if self.tokenTask == nil {

@@ -26,6 +26,12 @@
 		ADCD4B0C2C7417FC00C8D447 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4B0B2C7417FC00C8D447 /* UserInfoViewController.swift */; };
 		ADCD4B0E2C74188600C8D447 /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4B0D2C74188600C8D447 /* UserInfoViewModel.swift */; };
 		ADCD4B102C7418B400C8D447 /* UserInfoNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4B0F2C7418B400C8D447 /* UserInfoNavigator.swift */; };
+		ADCD4B132C7565E400C8D447 /* LibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4B122C7565E400C8D447 /* LibraryRepository.swift */; };
+		ADCD4B152C75664C00C8D447 /* BookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4B142C75664C00C8D447 /* BookModel.swift */; };
+		ADCD4B172C7567C100C8D447 /* BookLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4B162C7567C100C8D447 /* BookLibraryViewController.swift */; };
+		ADCD4B192C7567DE00C8D447 /* BookLibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4B182C7567DE00C8D447 /* BookLibraryViewModel.swift */; };
+		ADCD4B1B2C75681600C8D447 /* BookLibraryNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4B1A2C75681600C8D447 /* BookLibraryNavigator.swift */; };
+		ADCD4B1E2C75739300C8D447 /* BookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD4B1D2C75739300C8D447 /* BookCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +53,12 @@
 		ADCD4B0B2C7417FC00C8D447 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		ADCD4B0D2C74188600C8D447 /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		ADCD4B0F2C7418B400C8D447 /* UserInfoNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoNavigator.swift; sourceTree = "<group>"; };
+		ADCD4B122C7565E400C8D447 /* LibraryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryRepository.swift; sourceTree = "<group>"; };
+		ADCD4B142C75664C00C8D447 /* BookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookModel.swift; sourceTree = "<group>"; };
+		ADCD4B162C7567C100C8D447 /* BookLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLibraryViewController.swift; sourceTree = "<group>"; };
+		ADCD4B182C7567DE00C8D447 /* BookLibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLibraryViewModel.swift; sourceTree = "<group>"; };
+		ADCD4B1A2C75681600C8D447 /* BookLibraryNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLibraryNavigator.swift; sourceTree = "<group>"; };
+		ADCD4B1D2C75739300C8D447 /* BookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +121,7 @@
 				AD5C3D7E2C6AD1CC00090D44 /* UserRepository.swift */,
 				ADCD4AF72C72C4F600C8D447 /* ProductRepository.swift */,
 				ADCD4B052C74103500C8D447 /* AuthRepository.swift */,
+				ADCD4B122C7565E400C8D447 /* LibraryRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -118,6 +131,7 @@
 			children = (
 				AD5C3D802C6AD1EC00090D44 /* UserModel.swift */,
 				ADCD4AFA2C72C51900C8D447 /* ProductModel.swift */,
+				ADCD4B142C75664C00C8D447 /* BookModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -135,6 +149,7 @@
 			children = (
 				AD5C3D822C6AD48C00090D44 /* MainViewModel.swift */,
 				ADCD4B0D2C74188600C8D447 /* UserInfoViewModel.swift */,
+				ADCD4B182C7567DE00C8D447 /* BookLibraryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -154,6 +169,7 @@
 			children = (
 				ADCD4B092C74150700C8D447 /* Main */,
 				ADCD4B112C74342400C8D447 /* UserInfo */,
+				ADCD4B1C2C75737000C8D447 /* Book */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -165,6 +181,16 @@
 				ADCD4B0F2C7418B400C8D447 /* UserInfoNavigator.swift */,
 			);
 			path = UserInfo;
+			sourceTree = "<group>";
+		};
+		ADCD4B1C2C75737000C8D447 /* Book */ = {
+			isa = PBXGroup;
+			children = (
+				ADCD4B162C7567C100C8D447 /* BookLibraryViewController.swift */,
+				ADCD4B1A2C75681600C8D447 /* BookLibraryNavigator.swift */,
+				ADCD4B1D2C75739300C8D447 /* BookCell.swift */,
+			);
+			path = Book;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,16 +277,22 @@
 				ADCD4B0C2C7417FC00C8D447 /* UserInfoViewController.swift in Sources */,
 				AD5C3D6B2C6AD14200090D44 /* AppDelegate.swift in Sources */,
 				ADCD4B082C7413AB00C8D447 /* MainNavigator.swift in Sources */,
+				ADCD4B1E2C75739300C8D447 /* BookCell.swift in Sources */,
 				AD5C3D7F2C6AD1CC00090D44 /* UserRepository.swift in Sources */,
+				ADCD4B192C7567DE00C8D447 /* BookLibraryViewModel.swift in Sources */,
 				AD5C3D812C6AD1EC00090D44 /* UserModel.swift in Sources */,
+				ADCD4B152C75664C00C8D447 /* BookModel.swift in Sources */,
 				ADCD4B0E2C74188600C8D447 /* UserInfoViewModel.swift in Sources */,
 				ADCD4AF82C72C4F600C8D447 /* ProductRepository.swift in Sources */,
+				ADCD4B1B2C75681600C8D447 /* BookLibraryNavigator.swift in Sources */,
 				AD5C3D832C6AD48C00090D44 /* MainViewModel.swift in Sources */,
 				ADCD4AFF2C72CF7700C8D447 /* ProductItemCell.swift in Sources */,
 				ADCD4B062C74103500C8D447 /* AuthRepository.swift in Sources */,
+				ADCD4B172C7567C100C8D447 /* BookLibraryViewController.swift in Sources */,
 				AD5C3D6D2C6AD14200090D44 /* SceneDelegate.swift in Sources */,
 				ADCD4B102C7418B400C8D447 /* UserInfoNavigator.swift in Sources */,
 				ADCD4AFB2C72C51900C8D447 /* ProductModel.swift in Sources */,
+				ADCD4B132C7565E400C8D447 /* LibraryRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

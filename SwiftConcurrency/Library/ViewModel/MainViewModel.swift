@@ -15,6 +15,7 @@ struct MainViewModel {
         let viewWillAppear: AnyPublisher<Void, Never>
         let didTapFetchButton: AnyPublisher<Void, Never>
         let didTapRightNaviBarButton: AnyPublisher<Void, Never>
+        let didTapLeftNaviBarButton: AnyPublisher<Void, Never>
     }
     
     struct Outputs {
@@ -88,6 +89,11 @@ extension MainViewModel {
             inputs.didTapRightNaviBarButton
                 .map {
                     navigator.toUserInfo()
+                }
+                .eraseToAnyPublisher(),
+            inputs.didTapLeftNaviBarButton
+                .map {
+                    navigator.toBookLibrary()
                 }
                 .eraseToAnyPublisher()
         )

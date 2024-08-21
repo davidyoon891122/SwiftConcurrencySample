@@ -21,9 +21,12 @@ struct UserInfoViewModel {
     }
     
     private let navigator: UserInfoNavigatorProtocol
+    private let authRepository: AuthRepositoryProtocol
     
-    init(navigator: UserInfoNavigatorProtocol) {
+    init(navigator: UserInfoNavigatorProtocol,
+         authRepository: AuthRepositoryProtocol) {
         self.navigator = navigator
+        self.authRepository = authRepository
     }
     
 }
@@ -37,7 +40,14 @@ extension UserInfoViewModel {
         let event = Publishers.MergeMany(
             inputs.viewDidLoad
                 .map {
-                    print("ViewDidLoad")
+                    Task {
+                        do {
+                            let token = try await authRepository.getBearerToken()
+                            print("Token: \(token)")
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
                 }
                 .eraseToAnyPublisher(),
             inputs.didTapFetchButton

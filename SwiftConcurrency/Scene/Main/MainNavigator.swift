@@ -11,6 +11,7 @@ protocol MainNavigatorProtocol {
     
     func toMain()
     func toUserInfo()
+    func toBookLibrary()
     
 }
 
@@ -38,6 +39,11 @@ extension MainNavigator: MainNavigatorProtocol {
     func toUserInfo() {
         let navigator = UserInfoNavigator(navigationController: self.navigationController)
         navigator.toUserInfo()
+    }
+    
+    func toBookLibrary() {
+        let navigator = BookLibraryNavigator(navigationController: self.navigationController)
+        navigator.toBookLibrary()
     }
     
 }

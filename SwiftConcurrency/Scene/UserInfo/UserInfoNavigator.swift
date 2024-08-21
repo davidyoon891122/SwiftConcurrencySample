@@ -27,7 +27,7 @@ struct UserInfoNavigator {
 extension UserInfoNavigator: UserInfoNavigatorProtocol {
     
     func toUserInfo() {
-        let viewModel = UserInfoViewModel(navigator: self)
+        let viewModel = UserInfoViewModel(navigator: self, authRepository: AuthRepository())
         let viewController = UserInfoViewController(viewModel: viewModel)
         
         self.navigationController?.pushViewController(viewController, animated: true)
